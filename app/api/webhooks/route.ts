@@ -1,6 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
-import { WebhookEvent } from '@clerk/nextjs/server'
+import { clerkClient, WebhookEvent } from '@clerk/nextjs/server'
+import { createUser } from '@/lib/db/queries'
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
@@ -61,6 +62,9 @@ export async function POST(req: Request) {
         lastname:last_name
     }
     console.log(user);
+    const newUser = await createUser(user.email);
+    console.log(newUser);
+    
     return new Response("User created successfully",{status:200})
   }
 
