@@ -1,12 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 import {
-  ClerkProvider,
-  SignInButton,
-  SignOutButton,
-  SignedIn,
-  SignedOut,
-  UserButton
+  ClerkProvider
 } from '@clerk/nextjs'
 
 import { ThemeProvider } from '@/components/theme-provider';
