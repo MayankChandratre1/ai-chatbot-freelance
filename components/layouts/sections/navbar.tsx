@@ -164,7 +164,7 @@ export  function Navbar  ()  {
             </SignedIn>
 
             <SignedOut>
-                <SignInButton />
+                <SignInButton  />
             </SignedOut>
       </div>
 
@@ -243,7 +243,7 @@ export  function Navbar  ()  {
                           variant="ghost"
                           className="justify-start text-base"
                         >
-                            <SignInButton />
+                            <SignInButton  />
                           
                         </Button>
                           </SignedOut>

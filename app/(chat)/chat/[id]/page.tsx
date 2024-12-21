@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-import { auth } from '@/app/(auth)/auth';
 import { Chat } from '@/components/chat';
 import { DEFAULT_MODEL_NAME, models } from '@/lib/ai/models';
-import { getChatById, getMessagesByChatId } from '@/lib/db/queries';
+import { getChatById, getMessagesByChatId, getUserByClerkId } from '@/lib/db/queries';
 import { convertToUIMessages } from '@/lib/utils';
 import { DataStreamHandler } from '@/components/data-stream-handler';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -18,13 +18,17 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   }
 
   const session = await auth();
+  if(!session.userId){
+    redirect("/")
+  }
+  const [user] = await getUserByClerkId(session.userId)
 
   if (chat.visibility === 'private') {
-    if (!session || !session.user) {
+    if (!session || !session.userId) {
       return notFound();
     }
 
-    if (session.user.id !== chat.userId) {
+    if (user.id !== chat.userId) {
       return notFound();
     }
   }
@@ -46,7 +50,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         initialMessages={convertToUIMessages(messagesFromDb)}
         selectedModelId={selectedModelId}
         selectedVisibilityType={chat.visibility}
-        isReadonly={session?.user?.id !== chat.userId}
+        isReadonly={user.id !== chat.userId}
       />
       <DataStreamHandler id={id} />
     </>

@@ -7,7 +7,7 @@ import {
 } from 'ai';
 import { z } from 'zod';
 
-import { auth } from '@/app/(auth)/auth';
+// import { auth } from '@/app/(auth)/auth';
 import { customModel } from '@/lib/ai';
 import { models } from '@/lib/ai/models';
 import {
@@ -31,7 +31,8 @@ import {
   sanitizeResponseMessages,
 } from '@/lib/utils';
 
-import { generateTitleFromUserMessage } from '../../actions';
+import { generateTitleFromUserMessage, getUserByClerkIdAction } from '../../actions';
+import { auth } from '@clerk/nextjs/server';
 
 export const maxDuration = 60;
 
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
 
   const session = await auth();
 
-  if (!session || !session.user || !session.user.id) {
+  if (!session || !session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -79,10 +80,18 @@ export async function POST(request: Request) {
   }
 
   const chat = await getChatById({ id });
-
+  console.log("CHAT: ",JSON.stringify(chat));
+  
+  
   if (!chat) {
-    const title = await generateTitleFromUserMessage({ message: userMessage });
-    await saveChat({ id, userId: session.user.id, title });
+    console.log("CREATING CHAT");
+    const user = await getUserByClerkIdAction(session.userId)
+    if(user){
+      const title = await generateTitleFromUserMessage({ message: userMessage });
+      await saveChat({ id, userId: user.id, title });
+    }else{
+      return new Response("USER_NOT_FOUND",{status: 404})
+    }
   }
 
   const userMessageId = generateUUID();
@@ -207,14 +216,17 @@ export async function POST(request: Request) {
                 dataStream.writeData({ type: 'finish', content: '' });
               }
 
-              if (session.user?.id) {
+              if (session.userId) {
+                const user = await getUserByClerkIdAction(session.userId)
+                if(user){
                 await saveDocument({
                   id,
                   title,
                   kind,
                   content: draftText,
-                  userId: session.user.id,
+                  userId: user.id,
                 });
+              }
               }
 
               return {
@@ -312,14 +324,17 @@ export async function POST(request: Request) {
                 dataStream.writeData({ type: 'finish', content: '' });
               }
 
-              if (session.user?.id) {
+              if (session.userId) {
+                const user = await getUserByClerkIdAction(session.userId)
+                if(user){
                 await saveDocument({
                   id,
                   title: document.title,
                   content: draftText,
                   kind: document.kind,
-                  userId: session.user.id,
+                  userId: user.id,
                 });
+              }
               }
 
               return {
@@ -387,8 +402,8 @@ export async function POST(request: Request) {
                 suggestions.push(suggestion);
               }
 
-              if (session.user?.id) {
-                const userId = session.user.id;
+              if (session.userId) {
+                const userId = session.userId;
 
                 await saveSuggestions({
                   suggestions: suggestions.map((suggestion) => ({
@@ -410,7 +425,7 @@ export async function POST(request: Request) {
           },
         },
         onFinish: async ({ response }) => {
-          if (session.user?.id) {
+          if (session.userId) {
             try {
               const responseMessagesWithoutIncompleteToolCalls =
                 sanitizeResponseMessages(response.messages);
@@ -462,14 +477,14 @@ export async function DELETE(request: Request) {
 
   const session = await auth();
 
-  if (!session || !session.user) {
+  if (!session || !session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
 
   try {
     const chat = await getChatById({ id });
 
-    if (chat.userId !== session.user.id) {
+    if (chat.userId !== session.userId) {
       return new Response('Unauthorized', { status: 401 });
     }
 

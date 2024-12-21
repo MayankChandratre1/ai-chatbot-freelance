@@ -20,6 +20,12 @@ export const models: Array<Model> = [
     apiIdentifier: 'gpt-4o',
     description: 'For complex, multi-step tasks',
   },
+  {
+    id: 'gemma2-9b-it',
+    label: 'GROQ',
+    apiIdentifier: 'gemma2-9b-it',
+    description: 'For complex, multi-step tasks',
+  },
 ] as const;
 
-export const DEFAULT_MODEL_NAME: string = 'gpt-4o-mini';
+export const DEFAULT_MODEL_NAME: string = 'gemma2-9b-it';

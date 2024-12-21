@@ -1,10 +1,11 @@
-import { auth } from '@/app/(auth)/auth';
 import { BlockKind } from '@/components/block';
 import {
   deleteDocumentsByIdAfterTimestamp,
   getDocumentsById,
+  getUserByClerkId,
   saveDocument,
 } from '@/lib/db/queries';
+import { auth } from '@clerk/nextjs/server';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -16,9 +17,11 @@ export async function GET(request: Request) {
 
   const session = await auth();
 
-  if (!session || !session.user) {
+  if (!session || !session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
+
+  const [user] = await getUserByClerkId(session.userId)
 
   const documents = await getDocumentsById({ id });
 
@@ -28,7 +31,7 @@ export async function GET(request: Request) {
     return new Response('Not Found', { status: 404 });
   }
 
-  if (document.userId !== session.user.id) {
+  if (document.userId !== user.id) {
     return new Response('Unauthorized', { status: 401 });
   }
 
@@ -45,9 +48,12 @@ export async function POST(request: Request) {
 
   const session = await auth();
 
-  if (!session) {
+  if (!session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
+
+  const [user] = await getUserByClerkId(session.userId)
+
 
   const {
     content,
@@ -55,13 +61,13 @@ export async function POST(request: Request) {
     kind,
   }: { content: string; title: string; kind: BlockKind } = await request.json();
 
-  if (session.user?.id) {
+  if (session.userId) {
     const document = await saveDocument({
       id,
       content,
       title,
       kind,
-      userId: session.user.id,
+      userId: user.id,
     });
 
     return Response.json(document, { status: 200 });
@@ -81,15 +87,16 @@ export async function PATCH(request: Request) {
 
   const session = await auth();
 
-  if (!session || !session.user) {
+  if (!session || !session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
+  
 
   const documents = await getDocumentsById({ id });
 
   const [document] = documents;
 
-  if (document.userId !== session.user.id) {
+  if (document.userId !== session.userId) {
     return new Response('Unauthorized', { status: 401 });
   }
 

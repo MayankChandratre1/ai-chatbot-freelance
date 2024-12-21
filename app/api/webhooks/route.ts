@@ -62,7 +62,7 @@ export async function POST(req: Request) {
         lastname:last_name
     }
     console.log(user);
-    const newUser = await createUser(user.email);
+    const newUser = await createUser(user.email, user.clerkId);
     console.log(newUser);
     
     return new Response("User created successfully",{status:200})

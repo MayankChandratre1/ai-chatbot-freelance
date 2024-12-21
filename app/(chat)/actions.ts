@@ -7,6 +7,7 @@ import { customModel } from '@/lib/ai';
 import {
   deleteMessagesByChatIdAfterTimestamp,
   getMessageById,
+  getUserByClerkId,
   updateChatVisiblityById,
 } from '@/lib/db/queries';
 import { VisibilityType } from '@/components/visibility-selector';
@@ -16,13 +17,21 @@ export async function saveModelId(model: string) {
   cookieStore.set('model-id', model);
 }
 
+export async function getUserByClerkIdAction(clerkId:string) {
+    const users = await getUserByClerkId(clerkId)
+    if(users.length > 0){
+      return users[0]
+    }
+    return null
+}
+
 export async function generateTitleFromUserMessage({
   message,
 }: {
   message: CoreUserMessage;
 }) {
   const { text: title } = await generateText({
-    model: customModel('gpt-4o-mini'),
+    model: customModel('gemma2-9b-it'),
     system: `\n
     - you will generate a short title based on the first message a user begins a conversation with
     - ensure it is not more than 80 characters long

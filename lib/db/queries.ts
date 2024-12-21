@@ -35,11 +35,11 @@ export async function getUser(email: string): Promise<Array<User>> {
   }
 }
 
-export async function createUser(email: string) {
+export async function createUser(email: string, clerk:string) {
   try {
     const existingUser = await db.select().from(user).where(eq(user.email, email));
     if(existingUser.length == 0){
-      const res = await db.insert(user).values({ email });
+      const res = await db.insert(user).values({ email,clerkId:clerk });
       console.log(JSON.stringify(res));
       return res
     }
@@ -312,6 +312,15 @@ export async function deleteMessagesByChatIdAfterTimestamp({
     console.error(
       'Failed to delete messages by id after timestamp from database',
     );
+    throw error;
+  }
+}
+
+export async function getUserByClerkId(clerkId:string) {
+  try {
+    return await db.select().from(user).where(eq(user.clerkId, clerkId));
+  } catch (error) {
+    console.error('Failed to update chat visibility in database');
     throw error;
   }
 }

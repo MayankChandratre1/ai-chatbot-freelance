@@ -4,7 +4,7 @@ import { Chat } from '@/components/chat';
 import { DEFAULT_MODEL_NAME, models } from '@/lib/ai/models';
 import { generateUUID } from '@/lib/utils';
 import { DataStreamHandler } from '@/components/data-stream-handler';
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignOutButton, UserButton } from '@clerk/nextjs'
 
 
 export default async function Page() {
@@ -19,13 +19,6 @@ export default async function Page() {
 
   return (
     <>
-      <SignedIn>
-            <SignOutButton />
-            <UserButton />
-        </SignedIn>
-        <SignedOut>
-            <SignInButton />
-        </SignedOut>
       <Chat
         key={id}
         id={id}

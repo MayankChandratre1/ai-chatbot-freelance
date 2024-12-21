@@ -36,6 +36,20 @@
       "when": 1733945232355,
       "tag": "0004_odd_slayback",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1734803351278,
+      "tag": "0005_same_fallen_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1734803757126,
+      "tag": "0006_cool_taskmaster",
+      "breakpoints": true
     }
   ]
 }
