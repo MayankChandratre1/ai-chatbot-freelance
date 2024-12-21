@@ -1,5 +1,13 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
+import {
+  ClerkProvider,
+  SignInButton,
+  SignOutButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
 import { ThemeProvider } from '@/components/theme-provider';
 
@@ -41,6 +49,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html
       lang="en"
       // `next-themes` injects an extra classname to the body element to avoid
@@ -68,5 +77,6 @@ export default async function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
