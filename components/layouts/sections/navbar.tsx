@@ -158,7 +158,6 @@ export  function Navbar  ()  {
       <div className="hidden xl:block mx-12">
             <SignedIn>
                 <div className="flex gap-3 items-center">
-                     <SignOutButton />
                      <UserButton />
                 </div>
             </SignedIn>
