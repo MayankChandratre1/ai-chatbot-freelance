@@ -18,7 +18,7 @@ import {
 import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
-export function AppSidebar({ user }: { user: User | undefined }) {
+export function AppSidebar({ user }: { user: string | undefined }) {
   const router = useRouter();
   const { setOpenMobile } = useSidebar();
 
@@ -61,7 +61,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
       <SidebarContent>
         <SidebarHistory user={user} />
       </SidebarContent>
-      <SidebarFooter>{user && <SidebarUserNav user={user} />}</SidebarFooter>
+      <SidebarFooter>{user && <SidebarUserNav />}</SidebarFooter>
     </Sidebar>
   );
 }

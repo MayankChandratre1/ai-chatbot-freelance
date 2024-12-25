@@ -3,8 +3,8 @@ import { cookies } from 'next/headers';
 import { AppSidebar } from '@/components/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-import { auth } from '../(auth)/auth';
 import Script from 'next/script';
+import { auth } from '@clerk/nextjs/server';
 
 
 export default async function Layout({
@@ -22,7 +22,7 @@ export default async function Layout({
         strategy="beforeInteractive"
       />
       <SidebarProvider defaultOpen={!isCollapsed}>
-        <AppSidebar user={session?.user} />
+        <AppSidebar user={session?.userId ?? ""} />
         <SidebarInset>{children}</SidebarInset>
       </SidebarProvider>
     </>

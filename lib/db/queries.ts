@@ -85,10 +85,13 @@ export async function deleteChatById({ id }: { id: string }) {
 
 export async function getChatsByUserId({ id }: { id: string }) {
   try {
+    
+    const userId = await db.select().from(user).where(eq(user.clerkId, id))
+    console.log("CLERID_HISTORY: ",id);
     return await db
       .select()
       .from(chat)
-      .where(eq(chat.userId, id))
+      .where(eq(chat.userId, userId[0].id))
       .orderBy(desc(chat.createdAt));
   } catch (error) {
     console.error('Failed to get chats by user from database');
