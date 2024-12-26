@@ -65,7 +65,7 @@ export function VisibilitySelector({
       <DropdownMenuTrigger
         asChild
         className={cn(
-          'w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
+          'w-fit bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white',
           className,
         )}
       >
@@ -79,7 +79,7 @@ export function VisibilitySelector({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      <DropdownMenuContent align="start" className="min-w-[300px] bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white">
         {visibilities.map((visibility) => (
           <DropdownMenuItem
             key={visibility.id}
@@ -87,7 +87,7 @@ export function VisibilitySelector({
               setVisibilityType(visibility.id);
               setOpen(false);
             }}
-            className="gap-4 group/item flex flex-row justify-between items-center"
+            className="gap-4 group/item flex flex-row justify-between items-center bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white focus:bg-transparent focus:text-black focus:dark:text-white cursor-pointer"
             data-active={visibility.id === visibilityType}
           >
             <div className="flex flex-col gap-1 items-start">
@@ -98,7 +98,7 @@ export function VisibilitySelector({
                 </div>
               )}
             </div>
-            <div className="text-foreground dark:text-foreground opacity-0 group-data-[active=true]/item:opacity-100">
+            <div className=" opacity-0 group-data-[active=true]/item:opacity-100">
               <CheckCircleFillIcon />
             </div>
           </DropdownMenuItem>

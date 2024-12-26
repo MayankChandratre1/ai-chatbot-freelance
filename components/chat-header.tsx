@@ -35,10 +35,10 @@ function PureChatHeader({
 
       {(!open || windowWidth < 768) && (
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger asChild className=''>
             <Button
               variant="outline"
-              className="order-2 md:order-1 md:px-2 px-2 md:h-fit ml-auto md:ml-0"
+              className="order-2 md:order-1 md:px-2 px-2 md:h-fit ml-auto md:ml-0 bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white"
               onClick={() => {
                 router.push('/');
                 router.refresh();
@@ -55,7 +55,7 @@ function PureChatHeader({
       {!isReadonly && (
         <ModelSelector
           selectedModelId={selectedModelId}
-          className="order-1 md:order-2"
+          className="order-1 md:order-2 bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white"
         />
       )}
 
@@ -63,7 +63,7 @@ function PureChatHeader({
         <VisibilitySelector
           chatId={chatId}
           selectedVisibilityType={selectedVisibilityType}
-          className="order-1 md:order-3"
+          className="order-1 md:order-3 bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white"
         />
       )}
 

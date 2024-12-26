@@ -35,16 +35,16 @@ export function ModelSelector({
       <DropdownMenuTrigger
         asChild
         className={cn(
-          'w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
+          'w-fit   ',
           className,
         )}
       >
-        <Button variant="outline" className="md:px-2 md:h-[34px]">
+        <Button variant="outline" className="md:px-2 md:h-[34px] bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white">
           {selectedModel?.label}
           <ChevronDownIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      <DropdownMenuContent align="start" className="min-w-[300px] bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white">
         {models.map((model) => (
           <DropdownMenuItem
             key={model.id}
@@ -56,7 +56,7 @@ export function ModelSelector({
                 saveModelId(model.id);
               });
             }}
-            className="gap-4 group/item flex flex-row justify-between items-center"
+            className="gap-4 group/item flex flex-row justify-between items-center bg-white dark:bg-black text-black dark:text-white hover:bg-transparent focus:bg-transparent focus:text-black focus:dark:text-white cursor-pointer hover:text-black hover:dark:text-white active:text-black active:dark:text-white"
             data-active={model.id === optimisticModelId}
           >
             <div className="flex flex-col gap-1 items-start">
@@ -67,7 +67,7 @@ export function ModelSelector({
                 </div>
               )}
             </div>
-            <div className="text-foreground dark:text-foreground opacity-0 group-data-[active=true]/item:opacity-100">
+            <div className=" opacity-0 group-data-[active=true]/item:opacity-100 ">
               <CheckCircleFillIcon />
             </div>
           </DropdownMenuItem>

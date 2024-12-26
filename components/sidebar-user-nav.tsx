@@ -18,50 +18,34 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { auth } from '@clerk/nextjs/server';
-import { useAuth } from '@clerk/nextjs';
+import { SignOutButton, useAuth } from '@clerk/nextjs';
 
 export function SidebarUserNav() {
   const { setTheme, theme } = useTheme();
+  const session = useAuth()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-10">
-              {/* <Image
-                src={`https://avatar.vercel.sh/${userData.}`}
-                alt={user.email ?? 'User Avatar'}
-                width={24}
-                height={24}
-                className="rounded-full"
-              />
-              <span className="truncate">{user?.email}</span> */}
+            <SidebarMenuButton className=" h-10">
+              <p>Menu</p>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             side="top"
-            className="w-[--radix-popper-anchor-width]"
+            className="w-[--radix-popper-anchor-width] bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white focus:bg-transparent"
           >
             <DropdownMenuItem
-              className="cursor-pointer"
+              className="cursor-pointer bg-white dark:bg-black text-black dark:text-white hover:bg-transparent hover:text-black hover:dark:text-white active:text-black active:dark:text-white focus:bg-transparent focus:text-black focus:dark:text-white"
               onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
               {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <button
-                type="button"
-                className="w-full cursor-pointer"
-                onClick={() => {
-                  signOut({
-                    redirectTo: '/',
-                  });
-                }}
-              >
-                Sign out
-              </button>
+            <DropdownMenuItem className='cursor-pointer focus:bg-transparent focus:text-black focus:dark:text-white'>
+              <SignOutButton redirectUrl='/'/>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
