@@ -273,7 +273,7 @@ function PureBlock({
         >
           {!isMobile && (
             <motion.div
-              className="fixed bg-background h-dvh"
+              className="fixed bg-white dark:bg-black h-dvh"
               initial={{
                 width: isSidebarOpen ? windowWidth - 256 : windowWidth,
                 right: 0,
@@ -288,7 +288,7 @@ function PureBlock({
 
           {!isMobile && (
             <motion.div
-              className="relative w-[400px] bg-muted dark:bg-background h-dvh shrink-0"
+              className="relative w-[400px] text-black dark:text-white h-dvh shrink-0"
               initial={{ opacity: 0, x: 10, scale: 1 }}
               animate={{
                 opacity: 1,
