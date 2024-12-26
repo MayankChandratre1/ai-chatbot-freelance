@@ -30,8 +30,8 @@ function PureChatHeader({
   const { width: windowWidth } = useWindowSize();
 
   return (
-    <header className="flex sticky top-0 bg-background py-1.5 items-center px-2 md:px-2 gap-2">
-      <SidebarToggle />
+    <header className="flex sticky top-0 dark:bg-[#000] bg-white py-1.5 items-center px-2 md:px-2 gap-2">
+      <SidebarToggle className='bg-white dark:bg-black' />
 
       {(!open || windowWidth < 768) && (
         <Tooltip>

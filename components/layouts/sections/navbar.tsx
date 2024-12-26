@@ -6,6 +6,8 @@ import {
   LayoutDashboard,
   Menu,
   MessageSquare,
+  Moon,
+  Sun,
   User,
   Users,
 } from "lucide-react";
@@ -31,6 +33,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
 
 
 
@@ -89,11 +92,11 @@ const featureList: FeatureProps[] = [
 
 
 export  function Navbar  ()  {
-
+  const { setTheme, theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className=" fixed shadow-inner text-white bg-[#161412]  w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto   z-40 rounded-2xl flex justify-between items-center p-2 ">
+    <header className=" fixed shadow-inner dark:text-white text-black dark:bg-[#161412] bg-white  w-[90%] md:w-[70%] lg:w-[75%] lg:max-w-screen-xl top-5 mx-auto   z-40 rounded-2xl flex justify-between items-center p-2 ">
       {/* Logo - Always on the far left */}
       <Link
         href="/"
@@ -109,56 +112,74 @@ export  function Navbar  ()  {
       </Link>
 
       {/* Desktop Navigation - Center */}
-      <NavigationMenu className="hidden xl:block flex-1 ">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-[#161412] text-base">
-              Features
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <div className="grid w-[600px] grid-cols-2 gap-5 p-4">
-                <Image
-                  src="/api/placeholder/600/600"
-                  alt="Feature Preview"
-                  className="h-full w-full rounded-md object-cover"
-                  width={600}
-                  height={600}
-                />
-                <ul className="flex flex-col gap-2">
-                  {featureList.map(({ title, description }) => (
-                    <li
-                      key={title}
-                      className="rounded-md p-3 text-sm hover:bg-muted"
-                    >
-                      <p className="mb-1 font-semibold leading-none text-foreground">
-                        {title}
-                      </p>
-                      <p className="line-clamp-2 text-muted-foreground">
-                        {description}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            {routeList.map(({ href, label }) => (
-              <NavigationMenuLink key={href} asChild>
-                <Link href={href} className="text-base px-2">
-                  {label}
-                </Link>
-              </NavigationMenuLink>
+<NavigationMenu className="hidden xl:block flex-1">
+  <NavigationMenuList>
+    {/* Features Section */}
+    <NavigationMenuItem>
+      <NavigationMenuTrigger className="bg-white dark:bg-[#161412] hover:bg-gray-100 dark:hover:bg-[#1c1917] text-base text-gray-900 dark:text-gray-100">
+        Features
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <div className="grid w-[600px] grid-cols-2 gap-5 p-4 bg-white dark:bg-[#161412] rounded-md shadow-md">
+          <Image
+            src="/api/placeholder/600/600"
+            alt="Feature Preview"
+            className="h-full w-full rounded-md object-cover"
+            width={600}
+            height={600}
+          />
+          <ul className="flex flex-col gap-2">
+            {featureList.map(({ title, description }) => (
+              <li
+                key={title}
+                className="rounded-md p-3 text-sm hover:bg-gray-100 dark:hover:bg-[#1c1917] bg-gray-50 dark:bg-[#161412] text-gray-900 dark:text-gray-100"
+              >
+                <p className="mb-1 font-semibold leading-none text-gray-900 dark:text-gray-100">
+                  {title}
+                </p>
+                <p className="line-clamp-2 text-gray-600 dark:text-gray-400">
+                  {description}
+                </p>
+              </li>
             ))}
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+          </ul>
+        </div>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
 
-      <div className="hidden xl:block mx-12">
+    {/* Navigation Links */}
+    <NavigationMenuItem>
+      {routeList.map(({ href, label }) => (
+        <NavigationMenuLink key={href} asChild>
+          <Link
+            href={href}
+            className="text-base px-2 text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400"
+          >
+            {label}
+          </Link>
+        </NavigationMenuLink>
+      ))}
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+
+
+      <div className="hidden xl:flex mx-12 gap-3 items-center">
+            <div>
+              <Button className="bg-transparent hover:bg-transparent"
+                onClick={()=>{
+                  setTheme(() => theme == 'light' ? 'dark':'light')
+                }}
+              >
+                {theme == 'light' ? <Moon className="w-32" color="#000" size={44} />:<Sun className="w-32" size={44} />}
+                
+              </Button>
+            </div>
+            
             <SignedIn>
                 <div className="flex gap-3 items-center">
                      <UserButton />
+                     <SignOutButton />
                 </div>
             </SignedIn>
 

@@ -48,16 +48,16 @@ export function Contact() {
               </div>
             </div>
           </div>
-          <div className="space-y-8 bg-[#29262592] rounded py-10 px-4 border-2">
+          <div className="space-y-8 bg-[#efefef] dark:bg-[#29262592] rounded pt-4 pb-10 px-4 border border-gray-300">
             <h2 className="text-3xl text-orange-600 font-semibold">Send Us a Message</h2>
             <div className="grid grid-cols-2 gap-4">
-              <Input placeholder="First Name" />
-              <Input placeholder="Last Name" />
+              <Input placeholder="First Name" className="dark:bg-[#2d2d2d] bg-[#fff]" />
+              <Input placeholder="Last Name" className="dark:bg-[#2d2d2d] bg-[#fff]" />
             </div>
-            <Input placeholder="Email" type="email" />
+            <Input placeholder="Email" type="email" className="dark:bg-[#2d2d2d] bg-[#fff]" />
             <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Subject" />
+              <SelectTrigger className="dark:bg-[#2d2d2d] bg-[#fff] active:outline-none">
+                <SelectValue placeholder="Subject" className="dark:bg-[#2d2d2d] bg-[#fff]" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="general">General Inquiry</SelectItem>
@@ -66,7 +66,7 @@ export function Contact() {
               </SelectContent>
             </Select>
             <Textarea
-              className="min-h-[150px]"
+              className="min-h-[150px] bg-[#fff] dark:bg-[#2d2d2d]"
               placeholder="How can we help you?"
             />
             <Button className="w-full" size="lg">

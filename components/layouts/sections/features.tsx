@@ -42,14 +42,14 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="w-full bg-black flex flex-col items-center justify-center py-12 md:py-24 lg:py-32">
+    <section className="w-full bg-white dark:bg-black flex flex-col items-center justify-center py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2 pb-10">
-            <h2 className="text-md font-medium  text-orange-500 sm:text-lg md:text-xl">
+            <h2 className="text-md font-medium text-orange-500 sm:text-lg md:text-xl">
               Features
             </h2>
-            <h3 className="text-xl font-bold  text-white sm:text-2xl md:text-3xl lg:text-4xl">
+            <h3 className="text-xl font-bold text-black  dark:text-white sm:text-2xl md:text-3xl lg:text-4xl">
               How ValorAI Empowers Veterans
             </h3>
             <p className="mx-auto max-w-[600px] text-gray-400 md:text-xl">
@@ -66,7 +66,7 @@ export default function Features() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <h4 className="text-xl font-bold text-white">{feature.title}</h4>
+                  <h4 className="text-xl font-bold text-black dark:text-white">{feature.title}</h4>
                   <p className="text-sm text-gray-400">{feature.description}</p>
                 </CardContent>
               </Card>
