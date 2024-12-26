@@ -1,16 +1,11 @@
 <a href="https://chat.vercel.ai/">
   <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Next.js AI Chatbot</h1>
+  <h1 align="center">Valor AI Chatbot</h1>
 </a>
 
-<p align="center">
-  An Open-Source AI Chatbot Template Built With Next.js and the AI SDK by Vercel.
-</p>
 
 <p align="center">
   <a href="#features"><strong>Features</strong></a> ·
-  <a href="#model-providers"><strong>Model Providers</strong></a> ·
-  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
   <a href="#running-locally"><strong>Running locally</strong></a>
 </p>
 <br/>
@@ -30,24 +25,36 @@
 - Data Persistence
   - [Vercel Postgres powered by Neon](https://vercel.com/storage/postgres) for saving chat history and user data
   - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
-- [NextAuth.js](https://github.com/nextauthjs/next-auth)
-  - Simple and secure authentication
 
-## Model Providers
 
-This template ships with OpenAI `gpt-4o` as the default. However, with the [AI SDK](https://sdk.vercel.ai/docs), you can switch LLM providers to [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://sdk.vercel.ai/providers/ai-sdk-providers) with just a few lines of code.
-
-## Deploy Your Own
-
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20Chatbot&demo-description=An%20Open-Source%20AI%20Chatbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fchat.vercel.ai&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
 
 ## Running locally
 
 You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various OpenAI and authentication provider accounts.
+### Environment Variables Setup
+
+Below are the required environment variables and their setup instructions:
+
+- **OPENAI_API_KEY**: Get your OpenAI API Key here: [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys).
+
+- **GROQ_API_KEY**: Obtain your GROQ API Key from your respective platform.
+
+- **AUTH_SECRET**: Generate a random secret using [this tool](https://generate-secret.vercel.app/32) or run `openssl rand -base64 32` in your terminal.
+
+- **BLOB_READ_WRITE_TOKEN**: Instructions to create a Vercel Blob Store can be found [here](https://vercel.com/docs/storage/vercel-blob).
+
+- **POSTGRES_URL**: Set up your database following the [Vercel Postgres Quickstart guide](https://vercel.com/docs/storage/vercel-postgres/quickstart).
+
+- **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY** and **CLERK_SECRET_KEY**: Retrieve these keys from your Clerk dashboard.
+
+- **SIGNING_SECRET**: Obtain the signing secret for secure token signing.
+
+- **NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL** and **NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL**: Set these URLs to redirect users after sign-in or sign-up, e.g., `/home`.
+
+> **Important**: Ensure that these variables are added to your `.env` file and not exposed publicly. Do not commit the `.env` file to version control.
+
+### Steps to Run Locally
 
 1. Install Vercel CLI: `npm i -g vercel`
 2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
