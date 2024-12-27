@@ -343,7 +343,7 @@ function PureBlock({
                     setAttachments={setAttachments}
                     messages={messages}
                     append={append}
-                    className="bg-background dark:bg-muted"
+                    className=""
                     setMessages={setMessages}
                   />
                 </form>

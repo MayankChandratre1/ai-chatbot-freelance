@@ -91,7 +91,9 @@ const featureList: FeatureProps[] = [
 
 
 
-export  function Navbar  ()  {
+export  function Navbar  ({dontShowNav}:{
+  dontShowNav?: boolean
+})  {
   const { setTheme, theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -112,56 +114,58 @@ export  function Navbar  ()  {
       </Link>
 
       {/* Desktop Navigation - Center */}
-<NavigationMenu className="hidden xl:block flex-1">
-  <NavigationMenuList>
-    {/* Features Section */}
-    <NavigationMenuItem>
-      <NavigationMenuTrigger className="bg-white dark:bg-[#161412] hover:bg-gray-100 dark:hover:bg-[#1c1917] text-base text-gray-900 dark:text-gray-100">
-        Features
-      </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <div className="grid w-[600px] grid-cols-2 gap-5 p-4 bg-white dark:bg-[#161412] rounded-md shadow-md">
-          <Image
-            src="/api/placeholder/600/600"
-            alt="Feature Preview"
-            className="h-full w-full rounded-md object-cover"
-            width={600}
-            height={600}
-          />
-          <ul className="flex flex-col gap-2">
-            {featureList.map(({ title, description }) => (
-              <li
-                key={title}
-                className="rounded-md p-3 text-sm hover:bg-gray-100 dark:hover:bg-[#1c1917] bg-gray-50 dark:bg-[#161412] text-gray-900 dark:text-gray-100"
-              >
-                <p className="mb-1 font-semibold leading-none text-gray-900 dark:text-gray-100">
-                  {title}
-                </p>
-                <p className="line-clamp-2 text-gray-600 dark:text-gray-400">
-                  {description}
-                </p>
-              </li>
+      {
+        !!!dontShowNav && <NavigationMenu className="hidden xl:block flex-1">
+        <NavigationMenuList>
+          {/* Features Section */}
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="bg-white dark:bg-[#161412] hover:bg-gray-100 dark:hover:bg-[#1c1917] text-base text-gray-900 dark:text-gray-100">
+              Features
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <div className="grid w-[600px] grid-cols-2 gap-5 p-4 bg-white dark:bg-[#161412] rounded-md shadow-md">
+                <Image
+                  src="/api/placeholder/600/600"
+                  alt="Feature Preview"
+                  className="h-full w-full rounded-md object-cover"
+                  width={600}
+                  height={600}
+                />
+                <ul className="flex flex-col gap-2">
+                  {featureList.map(({ title, description }) => (
+                    <li
+                      key={title}
+                      className="rounded-md p-3 text-sm hover:bg-gray-100 dark:hover:bg-[#1c1917] bg-gray-50 dark:bg-[#161412] text-gray-900 dark:text-gray-100"
+                    >
+                      <p className="mb-1 font-semibold leading-none text-gray-900 dark:text-gray-100">
+                        {title}
+                      </p>
+                      <p className="line-clamp-2 text-gray-600 dark:text-gray-400">
+                        {description}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+      
+          {/* Navigation Links */}
+          <NavigationMenuItem>
+            {routeList.map(({ href, label }) => (
+              <NavigationMenuLink key={href} asChild>
+                <Link
+                  href={href}
+                  className="text-base px-2 text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400"
+                >
+                  {label}
+                </Link>
+              </NavigationMenuLink>
             ))}
-          </ul>
-        </div>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-
-    {/* Navigation Links */}
-    <NavigationMenuItem>
-      {routeList.map(({ href, label }) => (
-        <NavigationMenuLink key={href} asChild>
-          <Link
-            href={href}
-            className="text-base px-2 text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400"
-          >
-            {label}
-          </Link>
-        </NavigationMenuLink>
-      ))}
-    </NavigationMenuItem>
-  </NavigationMenuList>
-</NavigationMenu>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+      }
 
 
       <div className="hidden xl:flex mx-12 gap-3 items-center">
